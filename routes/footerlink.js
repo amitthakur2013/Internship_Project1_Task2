@@ -20,7 +20,7 @@ router.get('/:id',(req,res,next) => {
 		if(!link) {
 			return res.json({status:"Unsuccessfull!",message:"Link does not exist"});
 		}
-		res.status(200).send(link.body);
+		res.status(200).json(link);
 	})
 	.catch(err => next(err));
 })
@@ -28,10 +28,23 @@ router.get('/:id',(req,res,next) => {
 /*Create the link*/
 router.post('/create',(req, res, next) => {
 	Link.create(req.body)
-	.then((link) => {
+	.then(async (link) => {
+		link.isActive=true;
+		await link.save();
 		res.json(link);
 	})
 	.catch((err) =>  next(err));
+})
+
+/*Hide unhide the link*/
+router.put('/hide/:id',(req, res, next) => {
+	Link.findById(req.params.id)
+	.then(async (link) => {
+		link.isActive=!link.isActive;
+		await link.save();
+		res.json(link);
+	})
+	.catch(err => next(err));
 })
 
 /*Update the link*/
