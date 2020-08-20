@@ -1,7 +1,7 @@
 Task 1:
-Pdf generator functionality
+Pdf generator Functionality
 
 
 
 Task 2:
-Footer CMS functionality
+Footer CMS Functionality
